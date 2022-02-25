@@ -1,16 +1,29 @@
+from pyparsing import line_start
+
+
 wordFile = "test-word.txt"              # Single place to change the input file for testing
 
 def play_game():
-    get_test_word(wordFile)
+    guessWord = get_test_word(wordFile)
+    displayString = len(guessWord) * '_ '
+    print(f"There are {len(guessWord)} letters in the word to guess:  {displayString}")
+    letter = input("What letter would you like to guess?  ")
+    print(f"You selected {letter}")
+    if letter in guessWord:
+        print('Great job! You guessed right!!')
+    else:
+        print('Oh too bad.. guess again.')
+    
 
+def letter_check(char, guessWord):
+    pass
+    
 
 def get_test_word(file):
     """Takes a file passed into it and returns a string"""
     file1 = open(file)
     strArr = file1.readlines()
-    print(strArr)
-    print(len(strArr))
-
+    return strArr[0]                    # random generated number will replace 0 later
 
 if __name__ == "__main__":
     play_game()
