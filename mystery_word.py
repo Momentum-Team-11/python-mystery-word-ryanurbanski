@@ -5,12 +5,13 @@ wordFile = "test-word.txt"              # Single place to change the input file 
 
 def play_game():
     guessWord = get_test_word(wordFile)
-    displayString = len(guessWord) * '_ '
+    displayString = len(guessWord) * '_'
     print(f"There are {len(guessWord)} letters in the word to guess:  {displayString}")
     letter = input("What letter would you like to guess?  ")
     print(f"You selected {letter}")
     if letter in guessWord:
         print('Great job! You guessed right!!')
+        update_display(letter, guessWord)
     else:
         print('Oh too bad.. guess again.')
     
