@@ -11,21 +11,32 @@ def play_game():
     guessWord = get_test_word(wordFile)
     displayString = len(guessWord) * '_'
 
-    print(f"There are {len(guessWord)} letters in the word to guess:  {formatD(displayString)}       You still have {missesLeft} incorrect guesses left")
+    print(f"There are {len(guessWord)} letters in the word to guess:  {formatD(displayString)}       You have {missesLeft} incorrect guesses to make before you lose!")
     letter = input("What letter would you like to guess?  ")
 
-    print(f"You selected {letter}")
-    
-    if letter in guessWord:
-        print('Great job! You guessed right!!')
-        
-        locations = location_list(letter, guessWord)
-        displayString = updateDisplay(letter, locations, displayString)
-        
-        print(f'The locations that letter occurs in the word is:  {formatD(displayString)}       You still have {missesLeft} incorrect guesses left')
-    else:
-        print('Oh too bad.. guess again.')
 
+    while misses < chances:
+        if letter in guessWord:
+            print(f"You selected {letter}")
+            print('Great job! You guessed right!!')
+            
+            locations = location_list(letter, guessWord)
+            displayString = updateDisplay(letter, locations, displayString)
+            
+            print(f'The locations that letter occurs in the word is:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
+
+            letter = input("What letter would you like to guess?  ")
+        else:
+            print('Oh too bad.. guess again.')
+
+            misses = misses + 1                     # WHYYYY DOES IT NOT UPDATE ABOVE WITHOUT THIS????
+            missesLeft = missesLeft - 1
+
+            print(f'Here are the guesses you\'ve gotten so far:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
+            letter = input("What letter would you like to guess next?  ")
+    
+def printStatus():
+    pass
 
 def updateDisplay(letter, locations, displayString):
     str_list = list(displayString)
@@ -82,33 +93,3 @@ def get_test_word(file):
 
 if __name__ == "__main__":
     play_game()
-
-
-
-
-
-
-# GAMEPLAN =============================================
-# Get test word from file
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# F: Get random word from file
-# 
-# 
-# 
-# 
-# # # # # 
-    
-    
