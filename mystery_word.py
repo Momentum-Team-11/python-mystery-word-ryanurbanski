@@ -14,17 +14,30 @@ def play_game():
         locations = location_list(letter, guessWord)
         print(f'The locations that letter occurs in the word is: {locations}')
         displayString = updateDisplay(letter, locations, displayString)
+        printD(displayString)
     else:
         print('Oh too bad.. guess again.')
 
 
 def updateDisplay(letter, locations, displayString):
-    """Returns the display string with correct guesses shown"""
     str_list = list(displayString)
     for n in locations:
         str_list[n] = letter
-        print(str_list)
+    displayString = list_to_string(str_list)
+    return displayString
+    
+def printD(displayString):
+    newString = ""
+    for n in displayString:
+        newString += n + " "
+    print(newString) 
 
+
+def list_to_string(listOfChars):
+    newString = ""
+    for e in listOfChars:
+        newString += e
+    return newString
 
 def location_list(letter, word):
     """Returns a list of the locations that letter occurs"""
