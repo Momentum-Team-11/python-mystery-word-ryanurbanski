@@ -9,24 +9,31 @@ def play_game():
     missesLeft = chances - misses
 
     guessWord = get_test_word(wordFile)
-    guessString = (len(guessWord)-1) * '_'
-    displayString = (len(guessWord)-1) * '_'
+    guessWord = guessWord[0:-1]
+    print(guessWord)
+    print(len(guessWord))
+    guessString = (len(guessWord)) * '_'
+    displayString = (len(guessWord)) * '_'
 
     print(f"There are {len(guessWord)} letters in the word to guess:  {formatD(displayString)}       You have {missesLeft} incorrect guesses to make before you lose!")
     letter = input("What letter would you like to guess?  ")
 
 
-    while (misses < chances) and not (False):
+    while (misses < chances) and (guessWord != guessString):
         if letter in guessWord:
             print(f"You selected {letter}")
             print('Great job! You guessed right!!')
             
             locations = location_list(letter, guessWord)
             displayString = updateDisplay(letter, locations, displayString)
+            guessString = displayString
             guessString = updateString(letter, locations, guessString)
-            print(guessString)
+            # print(guessString)
+            # print(guessWord)
             
             print(f'The locations that letter occurs in the word is:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
+            print(f'The value of the guessWord is: {guessWord} and its length is: ', len(guessWord))
+            print(f'The value of the guessString is: {guessString} and its lenth is ', len(guessString))
 
             letter = input("What letter would you like to guess?  ")
         else:
@@ -38,11 +45,15 @@ def play_game():
 
             print(f'Here are the guesses you\'ve gotten so far:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
             letter = input("What letter would you like to guess next?  ")
-    
+    if guessWord == guessString:
+        print("YOU\'VE DONE IT!! YOU WIN!!!!!")
+    elif misses == chances:
+        print("LOSER!!!")
 
-def winTest():
+def hasWon():
     """Returns true when the word is guessed"""
-    return false
+
+    return False
     
 def updateString(letter, locations, guessString):
     str_list = list(guessString)
