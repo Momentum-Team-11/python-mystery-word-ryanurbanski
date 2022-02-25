@@ -11,9 +11,30 @@ def play_game():
     print(f"You selected {letter}")
     if letter in guessWord:
         print('Great job! You guessed right!!')
-        update_display(letter, guessWord)
+        locations = location_list(letter, guessWord)
+        print(f'The locations that letter occurs in the word is: {locations}')
+        displayString = updateDisplay(letter, locations)
     else:
         print('Oh too bad.. guess again.')
+
+
+def updateDisplay(letter, locations):
+    """Returns the display string with correct guesses shown"""
+
+def location_list(letter, word):
+    """Returns a list of the locations that letter occurs"""
+    locations = []
+    i = 0
+    while i < len(word):
+        for c in word:
+            if c == letter:
+                locations.append(i)
+                i += 1
+            else:
+                i += 1
+    return locations
+
+    
     
 
 def letter_check(char, guessWord):
