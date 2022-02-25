@@ -1,7 +1,9 @@
 from pyparsing import line_start
+import random
 
 
-wordFile = "test-word.txt"              # Single place to change the input file for testing
+# wordFile = "test-word.txt"              # Single place to change the input file for testing
+wordFile = "words.txt"              # Single place to change the input file for testing
 
 def play_game():
     chances = 8
@@ -14,6 +16,7 @@ def play_game():
     displayString = (len(guessWord)) * '_'
 
     print(f"There are {len(guessWord)} letters in the word to guess:  {formatD(displayString)}       You have {missesLeft} incorrect guesses to make before you lose!")
+    print(f"<<<<<<<<< The word is: {guessWord} >>>>>>>>>>>>>")
     letter = input("What letter would you like to guess?  ")
 
 
@@ -26,7 +29,7 @@ def play_game():
             displayString = updateDisplay(letter, locations, displayString)
             guessString = updateString(letter, locations, guessString)
             
-            print(f'The locations that letter occurs in the word is:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
+            print(f'Here is what you have so far:  {formatD(displayString).rjust(30, " ")}       You have {missesLeft} incorrect guesses remaining')
             
             if guessWord != guessString:
                 letter = input("What letter would you like to guess?  ")
@@ -40,23 +43,14 @@ def play_game():
             misses = misses + 1                     # WHYYYY DOES IT NOT UPDATE ABOVE WITHOUT THIS????
             missesLeft = missesLeft - 1
 
-            print(f'Here are the guesses you\'ve gotten so far:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
+            print(f'Here is what you have so far:  {formatD(displayString).rjust(30, " ")}       You have {missesLeft} incorrect guesses remaining')
 
             if misses < chances:
                 letter = input("What letter would you like to guess next?  ")
             else:
                 print("LOSER!!!")
+                print(f'The correct word was: {guessWord}')
     
-            
-    # if guessWord == guessString:
-    #     print("YOU\'VE DONE IT!! YOU WIN!!!!!")
-    # elif misses == chances:
-    #     print("LOSER!!!")
-
-def hasWon():
-    """Returns true when the word is guessed"""
-
-    return False
     
 def updateString(letter, locations, guessString):
     str_list = list(guessString)
@@ -65,15 +59,14 @@ def updateString(letter, locations, guessString):
     guessString = list_to_string(str_list)
     return guessString
     
-def printStatus():
-    pass
-
+    
 def updateDisplay(letter, locations, displayString):
     str_list = list(displayString)
     for n in locations:
         str_list[n] = letter
     displayString = list_to_string(str_list)
     return displayString
+    
     
 def formatD(displayString):
     newString = ""
@@ -95,6 +88,7 @@ def list_to_string(listOfChars):
         newString += e
     return newString
 
+
 def location_list(letter, word):
     """Returns a list of the locations that letter occurs"""
     locations = []
@@ -108,18 +102,14 @@ def location_list(letter, word):
                 i += 1
     return locations
 
-    
-    
-
-def letter_check(char, guessWord):
-    pass
-    
 
 def get_test_word(file):
     """Takes a file passed into it and returns a string"""
     file1 = open(file)
     strArr = file1.readlines()
-    return strArr[0]                    # random generated number will replace 0 later
+    idx = random.randint(0,len(strArr)-1)
+    return strArr[idx]                    # random generated number will replace 0 later
+
 
 if __name__ == "__main__":
     play_game()
