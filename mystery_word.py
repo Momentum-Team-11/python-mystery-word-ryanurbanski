@@ -4,17 +4,25 @@ from pyparsing import line_start
 wordFile = "test-word.txt"              # Single place to change the input file for testing
 
 def play_game():
+    chances = 8
+    misses = 0
+    missesLeft = chances - misses
+
     guessWord = get_test_word(wordFile)
     displayString = len(guessWord) * '_'
-    print(f"There are {len(guessWord)} letters in the word to guess:  {displayString}")
+
+    print(f"There are {len(guessWord)} letters in the word to guess:  {formatD(displayString)}       You still have {missesLeft} incorrect guesses left")
     letter = input("What letter would you like to guess?  ")
+
     print(f"You selected {letter}")
+    
     if letter in guessWord:
         print('Great job! You guessed right!!')
+        
         locations = location_list(letter, guessWord)
-        print(f'The locations that letter occurs in the word is: {locations}')
         displayString = updateDisplay(letter, locations, displayString)
-        printD(displayString)
+        
+        print(f'The locations that letter occurs in the word is:  {formatD(displayString)}       You still have {missesLeft} incorrect guesses left')
     else:
         print('Oh too bad.. guess again.')
 
@@ -25,6 +33,13 @@ def updateDisplay(letter, locations, displayString):
         str_list[n] = letter
     displayString = list_to_string(str_list)
     return displayString
+    
+def formatD(displayString):
+    newString = ""
+    for n in displayString:
+        newString += n + " "
+    return newString 
+
     
 def printD(displayString):
     newString = ""
