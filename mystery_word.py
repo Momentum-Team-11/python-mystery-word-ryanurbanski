@@ -9,24 +9,28 @@ def play_game():
     missesLeft = chances - misses
 
     guessWord = get_test_word(wordFile)
-    displayString = len(guessWord) * '_'
+    guessString = (len(guessWord)-1) * '_'
+    displayString = (len(guessWord)-1) * '_'
 
     print(f"There are {len(guessWord)} letters in the word to guess:  {formatD(displayString)}       You have {missesLeft} incorrect guesses to make before you lose!")
     letter = input("What letter would you like to guess?  ")
 
 
-    while misses < chances:
+    while (misses < chances) and not (False):
         if letter in guessWord:
             print(f"You selected {letter}")
             print('Great job! You guessed right!!')
             
             locations = location_list(letter, guessWord)
             displayString = updateDisplay(letter, locations, displayString)
+            guessString = updateString(letter, locations, guessString)
+            print(guessString)
             
             print(f'The locations that letter occurs in the word is:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
 
             letter = input("What letter would you like to guess?  ")
         else:
+            print(f"You selected {letter}")
             print('Oh too bad.. guess again.')
 
             misses = misses + 1                     # WHYYYY DOES IT NOT UPDATE ABOVE WITHOUT THIS????
@@ -34,6 +38,18 @@ def play_game():
 
             print(f'Here are the guesses you\'ve gotten so far:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
             letter = input("What letter would you like to guess next?  ")
+    
+
+def winTest():
+    """Returns true when the word is guessed"""
+    return false
+    
+def updateString(letter, locations, guessString):
+    str_list = list(guessString)
+    for n in locations:
+        str_list[n] = letter
+    guessString = list_to_string(str_list)
+    return guessString
     
 def printStatus():
     pass
