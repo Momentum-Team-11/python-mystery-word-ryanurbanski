@@ -10,8 +10,6 @@ def play_game():
 
     guessWord = get_test_word(wordFile)
     guessWord = guessWord[0:-1]
-    print(guessWord)
-    print(len(guessWord))
     guessString = (len(guessWord)) * '_'
     displayString = (len(guessWord)) * '_'
 
@@ -26,16 +24,15 @@ def play_game():
             
             locations = location_list(letter, guessWord)
             displayString = updateDisplay(letter, locations, displayString)
-            guessString = displayString
             guessString = updateString(letter, locations, guessString)
-            # print(guessString)
-            # print(guessWord)
             
             print(f'The locations that letter occurs in the word is:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
-            print(f'The value of the guessWord is: {guessWord} and its length is: ', len(guessWord))
-            print(f'The value of the guessString is: {guessString} and its lenth is ', len(guessString))
+            
+            if guessWord != guessString:
+                letter = input("What letter would you like to guess?  ")
+            else:
+                print("YOU DID IT!! YOU WIN!!!!!")
 
-            letter = input("What letter would you like to guess?  ")
         else:
             print(f"You selected {letter}")
             print('Oh too bad.. guess again.')
@@ -44,11 +41,17 @@ def play_game():
             missesLeft = missesLeft - 1
 
             print(f'Here are the guesses you\'ve gotten so far:  {formatD(displayString)}       You have {missesLeft} incorrect guesses remaining')
-            letter = input("What letter would you like to guess next?  ")
-    if guessWord == guessString:
-        print("YOU\'VE DONE IT!! YOU WIN!!!!!")
-    elif misses == chances:
-        print("LOSER!!!")
+
+            if misses < chances:
+                letter = input("What letter would you like to guess next?  ")
+            else:
+                print("LOSER!!!")
+    
+            
+    # if guessWord == guessString:
+    #     print("YOU\'VE DONE IT!! YOU WIN!!!!!")
+    # elif misses == chances:
+    #     print("LOSER!!!")
 
 def hasWon():
     """Returns true when the word is guessed"""
