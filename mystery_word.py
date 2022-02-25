@@ -1,25 +1,32 @@
 from pyparsing import line_start
 import random
 
+# Files =====================================================================
+# wordFile = "test-word.txt"  
+wordFile = "words.txt"
 
-# wordFile = "test-word.txt"              # Single place to change the input file for testing
-wordFile = "words.txt"              # Single place to change the input file for testing
 
 def play_game():
+    # Global Variables ======================================================
     chances = 8
     misses = 0
     missesLeft = chances - misses
 
+
+    # Working Variables =====================================================
     guessWord = get_test_word(wordFile)
     guessWord = guessWord[0:-1]
     guessString = (len(guessWord)) * '_'
     displayString = (len(guessWord)) * '_'
 
+
+    # Introduction ==========================================================
     print(f"There are {len(guessWord)} letters in the word to guess:  {formatD(displayString)}       You have {missesLeft} incorrect guesses to make before you lose!")
     print(f"<<<<<<<<< The word is: {guessWord} >>>>>>>>>>>>>")
     letter = input("What letter would you like to guess?  ")
 
 
+    # Game Logic =============================================================
     while (misses < chances) and (guessWord != guessString):
         if letter in guessWord:
             print(f"You selected {letter}")
@@ -51,7 +58,8 @@ def play_game():
                 print("LOSER!!!")
                 print(f'The correct word was: {guessWord}')
     
-    
+
+# Miscellaneous Functions ================================================
 def updateString(letter, locations, guessString):
     str_list = list(guessString)
     for n in locations:
@@ -108,8 +116,8 @@ def get_test_word(file):
     file1 = open(file)
     strArr = file1.readlines()
     idx = random.randint(0,len(strArr)-1)
-    return strArr[idx]                    # random generated number will replace 0 later
+    return strArr[idx]
 
-
+# Main Function ===============================================================
 if __name__ == "__main__":
     play_game()
