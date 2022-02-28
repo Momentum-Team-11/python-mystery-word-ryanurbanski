@@ -22,7 +22,7 @@ def play_game():
 
     # Introduction ==========================================================
     print(f"There are {len(guessWord)} letters in the word to guess:  {formatD(displayString)}       You have {missesLeft} incorrect guesses to make before you lose!")
-    print(f"<<<<<<<<< The word is: {guessWord} >>>>>>>>>>>>>")
+    print(f"<<<<<<<<< The word is: {guessWord} >>>>>>>>>>>>>")                  # For testing only
     letter = input("What letter would you like to guess?  ")
 
 
@@ -61,6 +61,7 @@ def play_game():
 
 # Miscellaneous Functions ================================================
 def updateString(letter, locations, guessString):
+    """ Return an updated version of the guess string with correct values added. """
     str_list = list(guessString)
     for n in locations:
         str_list[n] = letter
@@ -69,6 +70,9 @@ def updateString(letter, locations, guessString):
     
     
 def updateDisplay(letter, locations, displayString):
+    """Takes in a letter that is correct,
+    a list of the locations that letter occurs
+    and the current display string"""
     str_list = list(displayString)
     for n in locations:
         str_list[n] = letter
@@ -77,6 +81,7 @@ def updateDisplay(letter, locations, displayString):
     
     
 def formatD(displayString):
+    """" Return the string passed in with spaces added in between. """
     newString = ""
     for n in displayString:
         newString += n + " "
@@ -84,6 +89,7 @@ def formatD(displayString):
 
     
 def printD(displayString):
+    """ Print a string with a space inbetween. """
     newString = ""
     for n in displayString:
         newString += n + " "
@@ -91,6 +97,7 @@ def printD(displayString):
 
 
 def list_to_string(listOfChars):
+    """ Convert a list into a string with no spaces inbetween. """
     newString = ""
     for e in listOfChars:
         newString += e
@@ -102,6 +109,20 @@ def location_list(letter, word):
     locations = []
     i = 0
     while i < len(word):
+        for c in word:
+            if c == letter:
+                locations.append(i)
+                i += 1
+            else:
+                i += 1
+    return locations
+
+
+# Trying to find the more 'Pythonic' way... doesn't work right
+def location_list2(letter, word):
+    """Returns a list of the locations that letter occurs"""
+    locations = []
+    for i in range(0,len(word)):
         for c in word:
             if c == letter:
                 locations.append(i)
